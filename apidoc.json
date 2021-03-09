@@ -1,0 +1,8 @@
+{
+    "name": "StorageIt API docs",
+    "version": "1.0.0",
+    "description": "Official documentation of the StorageIt API.",
+    "template": {
+        "forceLanguage": "en"
+    }
+}
