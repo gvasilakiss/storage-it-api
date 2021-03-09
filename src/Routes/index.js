@@ -22,7 +22,17 @@ const router = express.Router();
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 Created
- *     Record added successfully!
+ *       {
+ *          "error": "",
+ *          "message": "Record created successfully!"
+ *       }
+ * 
+ * @apiErrorExample {json} List error
+ *  HTTP/1.1 404 Not Found
+ *   {
+ *      "error": err,
+ *      "message": "It looks like something went wrong, check your input and try again"
+ *   }
  */
 router.post('/storage', (req, res, next) => {
     let type = req.body.type;
@@ -73,8 +83,13 @@ router.post('/storage', (req, res, next) => {
  *      "type": "headphones",
  *      "warehouse": "wearmouth"
  *    }]
+ * 
  * @apiErrorExample {json} List error
- *    HTTP/1.1 500 Internal Server Error
+ *  HTTP/1.1 404 Not Found
+ *   {
+ *   "error": err,
+ *   "message": "It looks like something went wrong, check your input and try again"
+ *   }
  */
 router.get('/storage', (req, res) => {
     db.all("SELECT * FROM equipment", (err, rows) => {
@@ -108,15 +123,15 @@ router.get('/storage', (req, res) => {
  *      "type": "laptops",
  *      "warehouse": "st_peters"
  *     }
- * 
+ *
  *  @apiErrorExample {json} List error
  *  HTTP/1.1 404 Not Found
  *   {
- *   "error": null,
+ *   "error": err,
  *   "id": "43",
  *   "message": "It looks like this item was not found in our storage"
  *   }
- * 
+ *
  */
 router.get('/storage/:id', (req, res) => {
     let id = req.params.id
@@ -152,6 +167,14 @@ router.get('/storage/:id', (req, res) => {
  *      "type": "laptops",
  *      "warehouse": "st_peters"
  *     }
+ *
+ * @apiErrorExample {json} List error
+ *  HTTP/1.1 404 Not Found
+ *   {
+ *   "error": err,
+ *   "id": "43",
+ *   "message": "It looks like this type was not found in our storage"
+ *   }
  */
 router.get('/storage/type/:type', (req, res) => {
     let type = req.params.type
@@ -187,6 +210,14 @@ router.get('/storage/type/:type', (req, res) => {
  *      "type": "laptops",
  *      "warehouse": "st_peters"
  *     }
+ *
+ *  @apiErrorExample {json} List error
+ *  HTTP/1.1 404 Not Found
+ *   {
+ *   "error": err,
+ *   "id": "43",
+ *   "message": "It looks like this warehouse was not found in our storage"
+ *   }
  */
 router.get('/storage/warehouse/:warehouse', (req, res) => {
     let warehouse = req.params.warehouse
@@ -215,7 +246,6 @@ router.get('/storage/warehouse/:warehouse', (req, res) => {
  *
  * @apiParamExample {json} Input
  *    {
- *      "id": 10,
  *      "quantity": 143
  *      "type": "iphones",
  *      "warehouse": "st_peters"
@@ -223,7 +253,18 @@ router.get('/storage/warehouse/:warehouse', (req, res) => {
  *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 201 OK
- *     Record updated successfully!
+ *     {
+ *       "error": "",
+ *       "message": "Record updated successfully!"
+ *     }
+ *
+ *  @apiErrorExample {json} List error
+ *    HTTP/1.1 404 Not Found
+ *   {
+ *   "error": err,
+ *   "id": "43",
+ *   "message": "It looks like this type was not found in our storage"
+ *   }
  */
 router.put('/storage/:id', (req, res, next) => {
     let id = req.params.id;
@@ -252,12 +293,20 @@ router.put('/storage/:id', (req, res, next) => {
  * @api {delete} /storage/:id Delete an existing item
  * @apiVersion 1.0.0
  * @apiGroup StorageIT
- * 
+ *
  * @apiParam {id} id Items unique identifier
- * 
+ *
  * @apiSuccessExample Success-Response:
  *     HTTP/1.1 202 Accepted
  *     Record deleted successfully!
+ * 
+ * @apiErrorExample {json} List error
+ *    HTTP/1.1 404 Not Found
+ *   {
+ *   "error": err,
+ *   "id": "43",
+ *   "message": "It looks like this type was not found in our storage"
+ *   }
  */
 router.delete('/storage/:id', function (req, res, next) {
     let id = req.params.id;

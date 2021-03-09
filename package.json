@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon src/index.js",
-    "docs": "apidoc -i src/ -o apidoc/ ",
-    "publish": "node src/index.js"
+    "start": "nodemon src/",
+    "docs": "apidoc -i src/ -o apidoc/ "
   },
   "keywords": [],
   "author": "George Vasilakis",
